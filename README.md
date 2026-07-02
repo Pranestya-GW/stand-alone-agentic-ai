@@ -1,34 +1,96 @@
-# 🚀 Stand-Alone Agentic AI Setup
+# Stand-Alone Agentic AI Setup — Terminal AI Agent Installation Guides
 
-**Terminal AI agent installation guides — no scripts, just copy-paste.**
-
-Complete installation guides for 6 terminal-based AI coding agents. Each SQL file is a step-by-step tutorial you can copy-paste directly into your terminal. Available in **English** and **Bahasa Indonesia**, for **WSL/Linux** and **Windows** (PowerShell).
+> Complete step-by-step installation guides for 6 terminal-based AI coding agents. Copy-paste directly into your terminal — no scripts, no automation. Available in English and Bahasa Indonesia, for both WSL/Linux and Windows (PowerShell).
 
 ---
 
-## 📂 Repo Structure
+## Table of Contents
 
-```
-stand-alone-agentic-ai/
-├── README.md
-├── en/                          ← English
-│   ├── for-wsl-linux/           ← For WSL2 / Ubuntu / macOS
-│   │   ├── pi-dev-standalone-setup.sql
-│   │   ├── claude-code-standalone-setup.sql
-│   │   ├── codex-cli-standalone-setup.sql
-│   │   ├── gemini-cli-standalone-setup.sql
-│   │   ├── aider-standalone-setup.sql
-│   │   └── cursor-cli-standalone-setup.sql
-│   └── for-windows/             ← For Windows native (PowerShell)
-│       └── (same 6 agents)
-└── id/                          ← Bahasa Indonesia
-    ├── for-wsl-linux/
-    └── for-windows/
-```
+- [Overview](#overview)
+- [Quick Start](#quick-start)
+- [Agents Covered](#agents-covered)
+- [How Each Guide is Structured](#how-each-guide-is-structured)
+- [DeepSeek Integration](#deepseek-integration)
+- [Common Stack](#common-stack)
+- [Project Structure](#project-structure)
+- [Agent Comparison](#agent-comparison)
+- [How to Use the Files](#how-to-use-the-files)
+- [Resources](#resources)
+- [License](#license)
 
 ---
 
-## 🤖 Agents Covered
+## Overview
+
+Every `.sql` file in this repo is a standalone installation manual for a specific AI coding agent. Content lives entirely inside SQL comment blocks (`/* */` and `--`), so the files are readable in any text editor or SQL IDE — but they never execute as SQL.
+
+```
+┌─────────────────────┐     ┌──────────────────────┐     ┌─────────────────────┐
+│  Pick an agent       │────▶│  Open the .sql file  │────▶│  Copy-paste commands │
+│                      │     │                      │     │  into your terminal  │
+│  • pi.dev            │     │  Each layer explains │     │                      │
+│  • Claude Code       │     │  the why & what      │     │  • PowerShell        │
+│  • Codex CLI         │     │                      │     │  • bash              │
+│  • Gemini CLI        │     │  Read → understand   │     │                      │
+│  • Aider             │     │  → execute           │     │  One step at a time  │
+│  • Cursor CLI        │     │                      │     │                      │
+└─────────────────────┘     └──────────────────────┘     └─────────────────────┘
+```
+
+### Why Use This?
+
+| Problem | Solution |
+|---------|----------|
+| Agent docs are scattered across different sites | All 6 agents documented in one consistent format |
+| Windows guides assume WSL | Native **PowerShell** guides — no WSL required |
+| Tutorials skip the "why" | Each layer explains the reasoning before the command |
+| Hard to compare agents side-by-side | Agent comparison matrix with features, pricing, context windows |
+| Setup fails without troubleshooting | Every guide includes platform-specific troubleshooting |
+| Language barrier for Indonesian devs | `id/` folder with full Bahasa Indonesia commentary |
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- **Terminal**: bash (WSL/Linux/macOS) **or** PowerShell (Windows 10+/11)
+- **Git** (`sudo apt install git` or [git-scm.com](https://git-scm.com/download/win))
+- **Internet connection** for downloads
+
+### 1. Choose your agent
+
+Pick from 6 agents — see the [comparison matrix](#agent-comparison) to decide.
+
+### 2. Open the guide
+
+```bash
+# English, WSL/Linux:
+cat en/for-wsl-linux/aider-standalone-setup.sql
+
+# Bahasa Indonesia, WSL/Linux:
+cat id/for-wsl-linux/aider-standalone-setup.sql
+```
+
+```powershell
+# English, Windows:
+cat .\en\for-windows\aider-standalone-setup.sql
+
+# Bahasa Indonesia, Windows:
+cat .\id\for-windows\aider-standalone-setup.sql
+```
+
+### 3. Copy-paste, layer by layer
+
+Each file is divided into numbered layers. Run each layer's commands one at a time.
+
+### 4. Check the checklist
+
+Every guide ends with a checkbox checklist — tick off items as you install them.
+
+---
+
+## Agents Covered
 
 | Agent | Creator | Price | Best For |
 |---|---|---|---|
@@ -41,121 +103,143 @@ stand-alone-agentic-ai/
 
 ---
 
-## ⚡ Quick Start
+## How Each Guide is Structured
 
-### WSL / Linux / macOS
+Every `.sql` file follows the same layered architecture:
 
-```bash
-# English guide:
-cat en/for-wsl-linux/aider-standalone-setup.sql
-
-# Indonesian guide:
-cat id/for-wsl-linux/aider-standalone-setup.sql
+```
+Layer 0: Prerequisites     → Check OS, RAM, disk, install curl & git
+Layer 1: Runtime           → Node.js (fnm/nvm) or Python (uv/pip)
+Layer 2: Agent Binary      → Install command + verification
+Layer 3: DeepSeek Provider → API key setup + config (all agents support this!)
+Layer 4+: Ecosystem        → MCP servers, project config, themes, skills
+Quick Reference            → Checklist + slash commands + daily workflow
+Troubleshooting            → Common problems & platform-specific fixes
+Resources                  → Links to official docs & tools
 ```
 
-### Windows (PowerShell)
-
-```powershell
-# English guide:
-cat .\en\for-windows\aider-standalone-setup.sql
-
-# Indonesian guide:
-cat .\id\for-windows\aider-standalone-setup.sql
-```
+Each layer includes:
+- **Why**: explanation of what this layer provides
+- **What**: the commands to run
+- **How**: context on when and how to use the feature
 
 ---
 
-## 📐 How Each Guide is Structured
+## DeepSeek Integration
 
-Each `.sql` file uses **SQL comment documentation** format — all content lives inside `/* */` and `--` blocks, so it won't execute as SQL. Layer structure per file:
+**Every agent** in this repo is configured to support [DeepSeek](https://platform.deepseek.com/api_keys) as an alternative provider:
 
-1. **Layer 0 — Prerequisites** → check OS, RAM, disk, install curl/git
-2. **Layer 1 — Runtime** → Node.js (fnm/nvm) or Python (uv/pip)
-3. **Layer 2 — Agent Binary** → install command + verification
-4. **Layer 3 — DeepSeek Provider** → API key + config (all agents support DeepSeek!)
-5. **Layer 4+ — Ecosystem** → MCP servers, project config, themes, skills
-6. **Quick Reference** → checklist + slash commands + daily workflow
-7. **Troubleshooting** → common problems & fixes
-8. **Resources** → links to docs & tools
-
----
-
-## 🔑 DeepSeek Integration
-
-**All agents** in this repo are configured to support **DeepSeek** as an alternative provider:
-
-- 💰 **Cheapest**: $0.14/$0.28 per 1M tokens (input/output)
-- 🎁 **500M tokens FREE** on signup at [platform.deepseek.com](https://platform.deepseek.com/api_keys)
-- ⚡ **deepseek-v4-flash**: fast + great for daily coding
+- 💰 **Cheapest model**: $0.14/$0.28 per 1M tokens (input/output)
+- 🎁 **500M tokens FREE** on signup — no credit card required
+- ⚡ **deepseek-v4-flash**: fast enough for daily coding, cheap enough to use all day
 
 | Agent | DeepSeek Support |
 |---|---|
-| pi.dev | Native via custom provider |
+| pi.dev | Native via custom provider settings |
 | Claude Code | Via `OPENAI_API_BASE` custom endpoint |
-| Codex CLI | Via `OPENAI_API_BASE` env var |
-| Gemini CLI | Via settings.json custom provider |
-| Aider | **NATIVE** — `aider --model deepseek` |
-| Cursor CLI | Via config.json custom provider |
+| Codex CLI | Via `OPENAI_API_BASE` environment variable |
+| Gemini CLI | Via `settings.json` custom provider block |
+| Aider | **NATIVE** — `aider --model deepseek` (no config needed!) |
+| Cursor CLI | Via `config.json` custom provider block |
 
 ---
 
-## 🛠️ Common Stack (All Agents)
+## Common Stack
 
-Tools needed by most agents:
+Tools needed by most agents across both platforms:
 
 | Tool | Windows | Linux/WSL |
 |---|---|---|
 | Git | [git-scm.com](https://git-scm.com/download/win) | `sudo apt install git` |
 | Node.js 22 | [nodejs.org](https://nodejs.org) or nvm-windows | fnm or nvm |
 | Python 3.12 | [python.org](https://python.org) | `sudo apt install python3` |
-| DeepSeek Key | [platform.deepseek.com](https://platform.deepseek.com/api_keys) | same |
+| DeepSeek API Key | [platform.deepseek.com](https://platform.deepseek.com/api_keys) | same |
 
 ---
 
-## 📖 How to Use the Files
+## Project Structure
 
-1. **Open the `.sql` file** for the agent you want in any editor (VS Code, Notepad++, etc.)
-2. **Read layer by layer** — each section explains the why and what
-3. **Copy-paste commands** into your terminal (PowerShell / bash) one by one
-4. **Check off the checklist** at the bottom once installed
-5. **Done!** Your agent is ready to use
+```
+stand-alone-agentic-ai/
+├── README.md                            # This documentation
+│
+├── en/                                  # English guides
+│   ├── for-wsl-linux/                   # For WSL2 / Ubuntu / macOS
+│   │   ├── pi-dev-standalone-setup.sql
+│   │   ├── claude-code-standalone-setup.sql
+│   │   ├── codex-cli-standalone-setup.sql
+│   │   ├── gemini-cli-standalone-setup.sql
+│   │   ├── aider-standalone-setup.sql
+│   │   └── cursor-cli-standalone-setup.sql
+│   └── for-windows/                     # For Windows native (PowerShell)
+│       ├── pi-dev-standalone-setup.sql
+│       ├── claude-code-standalone-setup.sql
+│       ├── codex-cli-standalone-setup.sql
+│       ├── gemini-cli-standalone-setup.sql
+│       ├── aider-standalone-setup.sql
+│       └── cursor-cli-standalone-setup.sql
+│
+└── id/                                  # Panduan Bahasa Indonesia
+    ├── for-wsl-linux/
+    │   └── (6 files — same agents)
+    └── for-windows/
+        └── (6 files — same agents)
+```
 
-> 💡 **Tip:** All files use SQL comment format. Open in any SQL editor (DBeaver, pgAdmin, DataGrip) for nice syntax highlighting — or simply view as plain text.
+> 📂 **24 SQL files** total: 6 agents × 2 languages × 2 platforms.
 
 ---
 
-## 📋 Agent Comparison Matrix
+## Agent Comparison
 
 | Feature | pi.dev | Claude Code | Codex CLI | Gemini CLI | Aider | Cursor CLI |
 |---|---|---|---|---|---|---|
 | **Open Source** | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
 | **Free Tier** | ✅ | ❌ | ❌ | ✅ 60/min | Pay-per-use | Limited |
 | **No Runtime Needed** | ❌ | ✅ native | ✅ native | ❌ | ❌ | ✅ native |
+| **Runtime** | Node.js | Node.js | None | Node.js | Python | None |
 | **Git Integration** | Basic | Via MCP | Via MCP | Via MCP | **Native** | Via MCP |
 | **MCP Support** | ✅ | ✅ | ✅ | ✅ | Via tools | ✅ |
 | **Multi-Model** | ✅ | Via custom | Via custom | Via custom | ✅ **100+** | ✅ |
 | **CI/CD Ready** | ❌ | `-p` flag | `exec` | `-p` flag | `--message` | `-p` flag |
-| **Windows Native** | Via npm | ✅ | ✅ | Via npm | Via pip | ✅ |
+| **Windows Native** | Via npm | ✅ installer | ✅ installer | Via npm | Via pip | ✅ installer |
 | **Context Window** | ~200K | ~200K | ~200K | **1M** | Varies | ~200K |
+| **Auto-Commit** | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| **Voice Input** | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| **Architect Mode** | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| **SDK Available** | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ TypeScript |
 
 ---
 
-## 🔗 Resources
+## How to Use the Files
+
+1. **Open the `.sql` file** for your chosen agent in any editor (VS Code, Notepad++, DataGrip, DBeaver)
+2. **Read each layer** — the commentary explains _why_ you're installing each piece
+3. **Copy-paste commands** into your terminal **one at a time** — you stay in full control
+4. **Verify each step** before moving to the next layer
+5. **Check off the checklist** at the bottom of the file
+6. **Done!** Jump to the daily workflow section to start using your agent
+
+> 💡 **Tip:** Opening the files in a SQL editor (DBeaver, pgAdmin, DataGrip) gives you nice syntax highlighting. The SQL comment format means the file will never execute — it's purely documentation.
+
+---
+
+## Resources
 
 | Resource | URL |
 |---|---|
 | DeepSeek API Key | [platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys) |
 | Skills Directory | [skills.sh](https://www.skills.sh) |
 | MCP Documentation | [modelcontextprotocol.io](https://modelcontextprotocol.io) |
-| Git for Windows | [git-scm.com](https://git-scm.com/download/win) |
+| Git for Windows | [git-scm.com/download/win](https://git-scm.com/download/win) |
 | Node.js | [nodejs.org](https://nodejs.org) |
 | Python | [python.org](https://python.org) |
 
 ---
 
-## 📝 License
+## License
 
-MIT — feel free to use, modify, and share. If it helps, give the repo a ⭐!
+MIT — feel free to use, modify, and share. If this helps, give the repo a ⭐!
 
 ---
 
