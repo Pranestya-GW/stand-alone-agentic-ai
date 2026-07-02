@@ -1,7 +1,6 @@
 -- ============================================================================
 -- Codex CLI Standalone Setup Guide (Manual — No Scripts) — WINDOWS NATIVE
 -- ============================================================================
--- Sprint 27 — Juli 2026 | Exploration
 --
 -- Complete guide to install OpenAI Codex CLI on WINDOWS (PowerShell).
 -- NO WSL needed — native Windows. Copy-paste each PowerShell block.

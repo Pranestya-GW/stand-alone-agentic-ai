@@ -1,7 +1,6 @@
 -- ============================================================================
 -- Gemini CLI Standalone Setup Guide (Manual — No Scripts) — WINDOWS NATIVE
 -- ============================================================================
--- Sprint 27 — Juli 2026 | Exploration
 --
 -- Complete guide to install Gemini CLI on WINDOWS (PowerShell). NO WSL.
 -- Each section is an SQL comment block. Copy-paste each PowerShell block.

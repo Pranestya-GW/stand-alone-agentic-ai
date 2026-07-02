@@ -1,7 +1,6 @@
 -- ============================================================================
 -- pi.dev Standalone Setup Guide (Manual — No Scripts) — WINDOWS NATIVE
 -- ============================================================================
--- Sprint 27 — Juli 2026 | Exploration
 --
 -- This file is a complete, step-by-step guide to install pi.dev and the full
 -- recommended stack MANUALLY on WINDOWS (PowerShell) — no WSL needed.

@@ -1,7 +1,6 @@
 -- ============================================================================
 -- Cursor CLI Standalone Setup Guide (Manual — No Scripts) — WINDOWS NATIVE
 -- ============================================================================
--- Sprint 27 — Juli 2026 | Exploration
 --
 -- Complete guide to install Cursor CLI on WINDOWS (PowerShell). NO WSL.
 -- Copy-paste each PowerShell block.

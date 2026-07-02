@@ -1,7 +1,6 @@
 -- ============================================================================
 -- Gemini CLI Standalone Setup Guide (Manual — No Scripts)
 -- ============================================================================
--- Sprint 27 — Juli 2026 | Exploration
 --
 -- This file is a complete, step-by-step guide to install Gemini CLI (Google)
 -- and the recommended stack MANUALLY — no shell scripts, just copy-paste each block.

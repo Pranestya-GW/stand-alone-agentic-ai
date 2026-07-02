@@ -1,14 +1,13 @@
 -- ============================================================================
 -- pi.dev Standalone Setup Guide (Manual — No Scripts)
 -- ============================================================================
--- Sprint 27 — Juli 2026 | Exploration
--- 
--- This file is a complete, step-by-step guide to install pi.dev and the full
--- recommended stack MANUALLY — no shell scripts, just copy-paste each block.
--- 
--- Each section is an SQL comment block. Run the commands inside one by one
+--
+-- Complete step-by-step guide to install pi.dev and the full recommended
+-- stack MANUALLY. No shell scripts — just copy-paste each block.
+--
+-- Each section is an SQL comment block. Run commands one by one
 -- in your WSL/Linux terminal.
--- 
+--
 -- Stack overview:
 --   Layer 1: pi.dev binary          → the agent itself
 --   Layer 2: pi-setup               → safety guard, themes, file review, sync
@@ -19,7 +18,7 @@
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
- * ║  LAYER 0: PREREQUISITES — Pastikan environment siap                      ║
+ * ║  LAYER 0: PREREQUISITES — Make sure environment is ready                 ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
  * Requirements:
@@ -28,85 +27,84 @@
  *   - git  (sudo apt-get install -y git)
  */
 
--- Cek OS — harus Linux/WSL
+-- Check OS — must be Linux/WSL
 -- $ uname -a
 
--- Cek RAM — minimal 4GB, rekomendasi 8GB+
+-- Check RAM — minimum 4GB, recommended 8GB+
 -- $ free -h
 
--- Cek disk — butuh ~2GB free
+-- Check disk — ~2GB free needed
 -- $ df -h ~
 
--- Install curl & git kalo belum ada
+-- Install curl & git if not available
 -- $ sudo apt-get update && sudo apt-get install -y curl git
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
- * ║  LAYER 1: NODE.JS — pi.dev butuh Node.js 18+                             ║
+ * ║  LAYER 1: NODE.JS — pi.dev requires Node.js 18+                          ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * Kita pake fnm (Fast Node Manager) — lebih ringan dari nvm, lebih cepat.
- * Kenapa fnm? Bisa ganti-ganti versi Node.js dengan mudah, cocok buat
- * development environment yang butuh multiple versions.
+ * We use fnm (Fast Node Manager) — lighter than nvm, faster.
+ * fnm makes switching Node.js versions easy.
  */
 
 -- Step 1.1: Install fnm
 -- $ curl -fsSL https://fnm.vercel.app/install | bash
 
--- Step 1.2: Reload shell (atau tutup-buka terminal)
+-- Step 1.2: Reload shell (or close & reopen terminal)
 -- $ source ~/.bashrc
---   ATAU manual:
+--   OR manually:
 -- $ export PATH="$HOME/.local/share/fnm:$PATH"
 -- $ eval "$(fnm env)"
 
--- Step 1.3: Install Node.js 22 (LTS — paling stabil buat pi.dev)
+-- Step 1.3: Install Node.js 22 (LTS — most stable for pi.dev)
 -- $ fnm install 22
 -- $ fnm use 22
--- $ fnm default 22          -- biar permanen, ga perlu ketik ulang tiap buka terminal
+-- $ fnm default 22          -- make it permanent
 
--- Step 1.4: Verifikasi
--- $ node --version           -- harus v22.x.x
--- $ npm --version            -- harus 10.x.x
+-- Step 1.4: Verify
+-- $ node --version           -- should be v22.x.x
+-- $ npm --version            -- should be 10.x.x
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
- * ║  LAYER 2: PI.DEV BINARY — Install agent inti                             ║
+ * ║  LAYER 2: PI.DEV BINARY — Install the core agent                         ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * pi.dev adalah open-source terminal coding agent.
- * Bisa baca codebase, eksekusi bash, edit file, search, pake multiple models.
+ * pi.dev is an open-source terminal coding agent.
+ * Reads codebases, executes bash, edits files, searches, supports multiple models.
  *
  * Docs:    https://pi.dev
  * GitHub:  https://github.com/earendil-works/pi
  */
 
--- Step 2.1: Install pi.dev secara global
+-- Step 2.1: Install pi.dev globally
 -- $ npm install -g @earendil-works/pi-coding-agent
 
--- Step 2.2: Verifikasi
--- $ pi --version             -- harus menampilkan versi
+-- Step 2.2: Verify
+-- $ pi --version
 
--- Step 2.3: Test jalan (first run akan minta signup — gratis)
+-- Step 2.3: Test run (first run prompts for free signup)
 -- $ cd ~
 -- $ pi "Hello, what can you do?"
 
 -- Step 2.4: Basic commands reference
 -- $ pi                        -- interactive session
 -- $ pi "query here"           -- one-shot query
--- $ pi --model <model> "..."  -- pakai model spesifik
+-- $ pi --model <model> "..."  -- use specific model
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
  * ║  LAYER 3: PI-SETUP — Safety guard + themes + file review + sync          ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * pi-setup nambahin:
- *   🔒 Safety guard      — konfirmasi sebelum command berbahaya (rm -rf, force push, sudo)
- *   📝 File review       — lihat semua file yang diubah Pi, accept/undo
- *   🎨 10 themes         — dracula, nord, tokyo-night, catppuccin, dll
- *   📊 Token counter     — pantau usage context window real-time
- *   🤖 Local models      — konek ke Ollama / LM Studio
- *   🔄 Sync backup       — backup config Pi ke GitHub
+ * pi-setup adds:
+ *   🔒 Safety guard      — confirm before dangerous commands
+ *   📝 File review       — inspect all files Pi changed, accept/revert
+ *   🎨 10 themes         — dracula, nord, tokyo-night, catppuccin, etc.
+ *   📊 Token counter     — real-time context window usage
+ *   🤖 Local models      — connect to Ollama / LM Studio
+ *   🔄 Sync backup       — backup Pi config to GitHub
  *
  * GitHub: https://github.com/abhinand5/pi-setup
  */
@@ -118,69 +116,69 @@
 -- $ cd ~/pi-setup
 -- $ ./install.sh --restore --copy-config
 
--- Step 3.3: Fix warning "no existing Pi binary found" (kalo muncul)
+-- Step 3.3: Fix "no existing Pi binary found" warning (if it appears)
 -- $ echo 'export PI_REAL_BIN=$HOME/.local/share/fnm/node-versions/v22.14.0/installation/bin/pi' >> ~/.bashrc
 -- $ source ~/.bashrc
 
--- Step 3.4: Commands yang bisa dipakai di dalam Pi setelah pi-setup
---   /filechanges              → lihat semua file yang diubah + diff
---   /filechanges-accept        → keep semua perubahan
---   /filechanges-decline       → undo semua perubahan
---   /safety                    → cek safety guard on/off
---   /context                   → cek usage context window
---   /local-models              → tambah local model (Ollama/LM Studio)
---   /theme                     → ganti tema (10 pilihan)
---   /welcome updates on        → update notice pas startup
+-- Step 3.4: Commands available inside Pi after pi-setup
+--   /filechanges              → view all changed files + diff
+--   /filechanges-accept        → keep all changes
+--   /filechanges-decline       → revert all changes
+--   /safety                    → check safety guard on/off
+--   /context                   → check context window usage
+--   /local-models              → add local model (Ollama/LM Studio)
+--   /theme                     → switch theme (10 options)
+--   /welcome updates on        → update notice at startup
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
- * ║  LAYER 4: DEEPSEEK PROVIDER — Model termurah buat daily coding           ║
+ * ║  LAYER 4: DEEPSEEK PROVIDER — Cheapest model for daily coding            ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * Kenapa DeepSeek?
- *   - Termurah: $0.14/$0.28 per 1M token (input/output)
- *   - 500M token GRATIS pas signup
- *   - deepseek-v4-flash: cepat + bagus buat daily coding
- *   - Support OpenAI-compatible API → compatible sama pi.dev
+ * Why DeepSeek?
+ *   - Cheapest: $0.14/$0.28 per 1M tokens (input/output)
+ *   - 500M tokens FREE on signup
+ *   - deepseek-v4-flash: fast + good for daily coding
+ *   - OpenAI-compatible API → works with pi.dev
  *
  * Docs:     https://api-docs.deepseek.com/
  * API Base: https://api.deepseek.com/v1
  * Key:      https://platform.deepseek.com/api_keys
  */
 
--- Step 4.1: Dapatkan API key
---   Buka: https://platform.deepseek.com/api_keys
---   Sign up (gratis) → copy API key (format: sk-...)
+-- Step 4.1: Get API key
+--   Open: https://platform.deepseek.com/api_keys
+--   Sign up (free) → copy API key (format: sk-...)
 
--- Step 4.2: Simpan permanent di ~/.bashrc
+-- Step 4.2: Save permanently in ~/.bashrc
 -- $ echo 'export DEEPSEEK_API_KEY="sk-your-deepseek-key-here"' >> ~/.bashrc
 -- $ source ~/.bashrc
 
--- Step 4.3: Verifikasi key jalan
+-- Step 4.3: Verify key works
 -- $ curl https://api.deepseek.com/v1/models \
 --     -H "Authorization: Bearer $DEEPSEEK_API_KEY"
 
--- Step 4.4: Cara pakai di pi.dev
--- $ pi --model deepseek-v4-flash "Jelaskan codebase ini"
+-- Step 4.4: How to use in pi.dev
+-- $ pi --model deepseek-v4-flash "Explain this codebase"
 --
---   Atau ganti model mid-session di dalam Pi:
+--   Or switch model mid-session inside Pi:
 --   /model deepseek-v4-flash
 
--- Step 4.5: Model lain dari DeepSeek (referensi)
---   deepseek-v4-flash       → cepat, murah, daily use   ($0.14/$0.28)
---   deepseek-chat-v3        → reasoning lebih bagus      ($0.27/$1.10)
---   deepseek-reasoner       → deep thinking, math/logic   (price TBD)
+-- Step 4.5: Other DeepSeek models (reference)
+--   deepseek-v4-flash       → fast, cheap, daily use      ($0.14/$0.28)
+--   deepseek-chat-v3        → better reasoning             ($0.27/$1.10)
+--   deepseek-reasoner       → deep thinking, math/logic    (price TBD)
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
- * ║  LAYER 5: PLUGIN 1 — context-mode (Hemat Context Window)                ║
+ * ║  LAYER 5: PLUGIN 1 — context-mode (Save Context Window)                 ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * Masalah: Pi punya context window terbatas (~200K token). Kalo session
- *          panjang, dia bisa "lupa" percakapan awal.
+ * Problem: Pi has limited context window (~200K tokens). Long sessions
+ *          can lose early conversation context.
  *
- * Solusi:  context-mode otomatis compress conversation history, jadi
- *          context window tetap efisien meskipun session panjang.
+ * Solution: context-mode auto-compresses conversation history to keep
+ *           context efficient even in long sessions.
  *
  * Docs: https://pi.dev/packages/context-mode
  */
@@ -188,148 +186,98 @@
 -- Step 5.1: Install
 -- $ pi install npm:context-mode
 
--- Step 5.2: Cara pakai (di dalam Pi session)
---   /context-mode on         → enable, auto-compress pas context mau penuh
---   /context-mode off        → disable, full context (default)
---   /context-mode smart      → smart compression (rekomendasi)
---   /context-mode manual     → compress hanya pas disuruh
---   /context-mode status     → cek mode sekarang
-
--- Step 5.3: Kapan pakai?
---   - Refactoring besar (banyak file diubah)
---   - Eksplorasi codebase yang belum dikenal
---   - Session panjang > 30 menit
---   - Debugging kompleks yang butuh banyak bolak-balik
+-- Step 5.2: How to use (inside Pi session)
+--   /context-mode on         → enable, auto-compress when context full
+--   /context-mode smart      → smart compression (recommended)
+--   /context-mode status     → check current mode
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
- * ║  LAYER 5: PLUGIN 2 — pi-deepseek-search (Web Search buat DeepSeek)      ║
+ * ║  LAYER 5: PLUGIN 2 — pi-deepseek-search (Web Search for DeepSeek)       ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * Masalah: DeepSeek model ga punya akses internet. Jadi kalo nanya soal
- *          library versi terbaru atau API ter-update, jawabannya bisa basi.
+ * Problem: DeepSeek models don't have internet access. Answers about
+ *          latest APIs or libraries may be stale.
  *
- * Solusi:  pi-deepseek-search ngasih DeepSeek kemampuan web search —
- *          dia bakal fetch docs terbaru, npm registry, StackOverflow, dll.
+ * Solution: pi-deepseek-search gives DeepSeek web search capability —
+ *           fetches latest docs, npm registry, StackOverflow, etc.
  *
  * Docs: https://pi.dev/packages/pi-deepseek-search
  */
 
--- Step 5.4: Install
+-- Step 5.3: Install
 -- $ pi install npm:pi-deepseek-search
 
--- Step 5.5: Cara pakai (di dalam Pi session — tanya natural aja)
+-- Step 5.4: How to use (inside Pi session — natural language)
 --   "Search for the latest React 19 API changes and update our hooks"
 --   "Find the npm package for PostgreSQL connection pooling and add it"
 --   "Look up how to configure Tailwind v4 with Vite"
---   "Cari cara terbaru setup Prisma dengan PostgreSQL 16"
---
---   Atau explicit search command:
---   /search "PostgreSQL 16 parallel query improvements"
-
--- Step 5.6: Kapan pakai?
---   - Kerja dengan library/framework versi baru
---   - Cek docs terbaru sebelum implementasi
---   - Debugging error yang ga known di training data
---   - Research best practice terbaru
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
  * ║  LAYER 5: PLUGIN 3 — pi-codex-goal (Goal Mode)                          ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * Masalah: Kalo task-nya besar, Pi bisa lupa objektif di tengah jalan
- *          atau berbelok ke hal lain tanpa selesaiin goal awal.
+ * Problem: Large tasks can cause Pi to forget the objective mid-way.
  *
- * Solusi:  Goal mode — persistent objective tracking ala Codex. Pi bakal:
- *          1. Nyimpen objective + token budget di session (persist across reload/fork)
- *          2. Tracking elapsed time aktif & token usage real-time di footer
- *          3. Kirim steering prompt kalo token budget abis atau goal idle
- *          4. Agent tools: create_goal, get_goal, update_goal (dipanggil otomatis)
- *
- * Status goal: active | paused | budgetLimited | complete
+ * Solution: Goal mode provides persistent objective tracking. Pi will:
+ *          1. Store objective + token budget (persists across reload/fork)
+ *          2. Track active elapsed time & token usage in footer
+ *          3. Send steering prompt when token budget runs out
+ *          4. Agent tools: create_goal, get_goal, update_goal
  *
  * Docs: https://github.com/fitchmultz/pi-codex-goal
  */
 
--- Step 5.7: Install
+-- Step 5.5: Install
 -- $ pi install npm:pi-codex-goal
 
--- Step 5.8: Cara pakai (di dalam Pi session)
+-- Step 5.6: How to use (inside Pi session)
 --   /goal "Add user authentication with JWT to this Express app"
---     → Mulai goal baru (atau replace yang existing — ada konfirmasi)
+--     → Start new goal (or replace existing — confirmation prompt)
 --   /goal "Set up CI/CD with GitHub Actions — budget 50K tokens"
---     → Goal dengan token budget (agent berhenti pas limit tercapai)
+--     → Goal with token budget (agent stops at limit)
 --   /goal
---     → Lihat objective saat ini + status + token usage + elapsed time
---   /goal pause
---     → Pause goal (agent bisa kerjain hal lain dulu)
---   /goal resume
---     → Lanjutin goal yang di-pause
---   /goal clear
---     → Hapus goal (selesai atau batal)
---
---   Agent juga bisa manggil tools ini sendiri:
---     create_goal({ objective, token_budget? })
---     get_goal({})
---     update_goal({ status: "complete" })
-
--- Step 5.9: Kapan pakai?
---   - Task besar yang butuh multiple session (auth, payment, notification)
---   - Migrasi panjang (JS→TS, REST→GraphQL, PG 10→16)
---   - Mau batasi token per task (budget control)
---   - Normalisasi database besar — track progress antar session
---   - Fitur kompleks yang dikerjain nyicil (pause/resume)
+--     → View current objective + status + token usage
+--   /goal pause / resume / clear
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
  * ║  LAYER 5: PLUGIN 4 — rpiv-ask-user-question (Interactive Decisions)     ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * Masalah: Pi kadang "nebak" keputusan arsitektur — misal milih SQLite
- *          padahal lu maunya PostgreSQL. Bikin frustasi.
+ * Problem: Pi sometimes "guesses" architectural decisions — e.g. choosing
+ *          SQLite when you wanted PostgreSQL. Frustrating.
  *
- * Solusi:  Plugin ini bikin Pi NANYA dulu sebelum ambil keputusan penting.
- *          Lu yang megang kendali penuh.
+ * Solution: This plugin makes Pi ASK before making important decisions.
+ *           You stay in full control.
  *
  * Docs: https://pi.dev/packages/@juicesharp/rpiv-ask-user-question
  */
 
--- Step 5.10: Install
+-- Step 5.7: Install
 -- $ pi install npm:@juicesharp/rpiv-ask-user-question
 
--- Step 5.11: Cara pakai (otomatis aktif — Pi bakal nanya)
+-- Step 5.8: How to use (auto-active — Pi will ask)
 --   Pi: "Should I use PostgreSQL or SQLite for this?"
---   Lu: [1] PostgreSQL  [2] SQLite  [3] Custom...
+--   You: [1] PostgreSQL  [2] SQLite  [3] Custom...
 --
---   Pi: "Which port should the dev server run on? (default: 3000)"
---   Lu: 8080
---
---   Pi: "Keep the existing error handling or rewrite?"
---   Lu: [1] Keep  [2] Rewrite
-
--- Step 5.12: Konfigurasi mode (di dalam Pi session)
---   /ask-user-question mode always     → tanya SEMUA keputusan (full control)
---   /ask-user-question mode blockers   → tanya hanya pas buntu (rekomendasi)
---   /ask-user-question mode off        → disable, biarin Pi nebak (auto-pilot)
-
--- Step 5.13: Kapan pakai?
---   - Arsitektur project baru
---   - Code review (pengen kontrol penuh atas perubahan)
---   - Pair programming dengan Pi
---   - Team lead / senior role (keputusan ada di lu, Pi eksekutor)
+-- Configuration:
+--   /ask-user-question mode always     → ask ALL decisions (full control)
+--   /ask-user-question mode blockers   → ask only at impasses (recommended)
+--   /ask-user-question mode off        → disable, let Pi guess (auto-pilot)
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
- * ║  LAYER 6: GRILLING SKILL — Stress-Test Rencana & Desain                 ║
+ * ║  LAYER 6: GRILLING SKILL — Stress-Test Plans & Designs                  ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  *
- * Masalah: Sebelum refactor besar atau fitur baru, sering ada blind spot —
- *          asumsi yang ga di-challenge, edge case yang ga kepikiran.
+ * Problem: Before big refactors or new features, there are often blind spots —
+ *          unchallenged assumptions, unthought edge cases.
  *
- * Solusi:  Grilling skill (by Matt Pocock) bikin Pi "interogasi" lu tentang
- *          setiap aspek rencana. Jalanin semua cabang decision tree sampe
- *          semua keputusan resolved dan lu + Pi punya shared understanding.
+ * Solution: Grilling skill (by Matt Pocock) makes Pi "interrogate" you about
+ *           every aspect of the plan. Walks down every decision tree branch
+ *           until all decisions are resolved.
  *
  * Docs: https://www.skills.sh/mattpocock/skills/grilling
  */
@@ -337,34 +285,19 @@
 -- Step 6.1: Install
 -- $ npx skills add https://github.com/mattpocock/skills --skill grilling
 
--- Step 6.2: Cara pakai (di dalam Pi session — trigger dengan "grill me")
+-- Step 6.2: How to use (inside Pi session — trigger with "grill me")
 --   "I want to add Redis caching to the API — grill me"
 --   "Here's my database schema plan — grill me on it"
---   "Rencana normalisasi database HIS — grill me"
---   "Mau migrasi dari PostgreSQL 10 ke 16 — grill me on the migration plan"
---
---   Apa yang terjadi:
---   - Pi interview lu relentlessly tentang setiap aspek
---   - Walk down tiap cabang decision tree
---   - Stop pas semua keputusan resolved
---   - Hasil: crystal-clear shared understanding (lu dan Pi sepaham)
-
--- Step 6.3: Kapan pakai?
---   - Sebelum refactor besar
---   - Sebelum architectur change
---   - Planning fitur baru yang kompleks
---   - Sebelum migrasi database
---   - Code review major changes
---   - KAPAN AJA dimana "salah itu mahal"
+--   "Migrating from PostgreSQL 10 to 16 — grill me on the migration plan"
 
 /*
  * ╔═══════════════════════════════════════════════════════════════════════════╗
- * ║  QUICK REFERENCE: Semua Command dalam 1 Tempat                          ║
+ * ║  QUICK REFERENCE: All Commands in One Place                             ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  */
 
 -- ============================================================================
--- INSTALLATION CHECKLIST (centang pas udah keinstall)
+-- INSTALLATION CHECKLIST (check off when installed)
 -- ============================================================================
 
 -- [ ] Node.js 22          → node --version
@@ -378,19 +311,19 @@
 -- [ ] grilling skill      → ls ~/.pi/agent/skills/ | grep grill
 
 -- ============================================================================
--- DAILY WORKFLOW — Contoh session Pi
+-- DAILY WORKFLOW — Example Pi session
 -- ============================================================================
 
--- $ cd ~/SQL-QUERY-JOB                  -- masuk ke project
+-- $ cd ~/SQL-QUERY-JOB                  -- go to project
 -- $ pi                                   -- start Pi
 
--- # Di dalam Pi session:
--- /context-mode smart                    -- hemat context (optional)
--- "Jelaskan struktur database project ini"
--- "Cari semua query yang pake SELECT * dan ganti dengan explicit columns"
--- "Tambah index di kolom yang sering di-join tapi belum ada index-nya"
--- /goal "Normalisasi tabel t_bayar — tambah FK + bersihin orphan rows"
--- "Grill me on this indexing strategy buat vu_kasir_belum_lunas"
+-- # Inside Pi session:
+-- /context-mode smart                    -- save context (optional)
+-- "Explain the database structure of this project"
+-- "Find all queries using SELECT * and replace with explicit columns"
+-- "Add indexes on frequently joined columns"
+-- /goal "Normalize t_bayar table — add FK + clean orphan rows"
+-- "Grill me on this indexing strategy for vu_kasir_belum_lunas"
 
 -- ============================================================================
 -- TROUBLESHOOTING
@@ -400,35 +333,29 @@
 -- Fix:     $ export PATH="$HOME/.local/share/fnm/node-versions/v22.14.0/installation/bin:$PATH"
 --          $ source ~/.bashrc
 
--- Problem: Warning: no existing Pi binary found (setelah install pi-setup)
+-- Problem: Warning: no existing Pi binary found (after pi-setup install)
 -- Fix:     $ echo 'export PI_REAL_BIN=$HOME/.local/share/fnm/node-versions/v22.14.0/installation/bin/pi' >> ~/.bashrc
 --          $ source ~/.bashrc
 
 -- Problem: DeepSeek API key not recognized
--- Fix:     $ echo $DEEPSEEK_API_KEY                          -- cek apakah ke-set
+-- Fix:     $ echo $DEEPSEEK_API_KEY                          -- check if set
 --          $ source ~/.bashrc                                 -- reload
 --          $ curl https://api.deepseek.com/v1/models \       -- test API
 --              -H "Authorization: Bearer $DEEPSEEK_API_KEY"
 
--- Problem: npm install gagal (permission error)
+-- Problem: npm install fails (permission error)
 -- Fix:     $ mkdir ~/.npm-global
 --          $ npm config set prefix '~/.npm-global'
 --          $ echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
 --          $ source ~/.bashrc
 
--- Problem: Ollama / local model lambat di WSL
--- Fix:     Bikin %USERPROFILE%\.wslconfig di Windows:
---          [wsl2]
---          memory=16GB
---          processors=8
-
 -- ============================================================================
--- UNINSTALL — Balikin ke vanilla Pi (hapus pi-setup aja, Pi binary tetap ada)
+-- UNINSTALL — Revert to vanilla Pi (removes pi-setup only, Pi binary stays)
 -- ============================================================================
 
 -- $ cd ~/pi-setup
--- $ ./uninstall.sh                     -- hapus extensions, themes, config
--- $ npm uninstall -g @earendil-works/pi-coding-agent   -- hapus Pi binary (optional)
+-- $ ./uninstall.sh                     -- remove extensions, themes, config
+-- $ npm uninstall -g @earendil-works/pi-coding-agent   -- remove Pi binary (optional)
 
 -- ============================================================================
 -- RESOURCES
@@ -441,9 +368,7 @@
 -- DeepSeek key:      https://platform.deepseek.com/api_keys
 -- Skills directory:  https://www.skills.sh/
 -- Pi packages:       https://pi.dev/packages/
--- pi install help:   https://github.com/earendil-works/pi (see packages.md)
--- Full lab docs:      ../agentic-ai-lab/
 
 -- ============================================================================
--- EOF — Selamat ngoding dengan Pi! 🚀
+-- EOF — Happy coding with Pi! 🚀
 -- ============================================================================
